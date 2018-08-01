@@ -57,7 +57,7 @@ for t = 1:max_loop
     Mapping();
 
     %% Show global life-long map 
-    showEvidentialMap(total_grid, positions, t);
+    showEvidentialMap(total_grid);
     if capture_video
         writeVideo(videoObj, getframe(gcf));
     end

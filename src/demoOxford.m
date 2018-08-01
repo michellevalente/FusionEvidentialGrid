@@ -16,15 +16,15 @@ grid_parameters.size_grid_y = round(150 / grid_parameters.resolution);
 grid_parameters.origin = [ 1, round(grid_parameters.size_grid_y / 2.0)];
 
 %% Folders
-computer_folder = pwd;
-main_dir = strcat(pwd,'/sample_small');
+computer_folder = strcat(pwd,'/../');
+main_dir = strcat(computer_folder,'/sample_small');
 image_dir = strcat(main_dir, '/stereo/left/');
 image_dir_left = strcat(main_dir, '/stereo/left/');
 image_dir_right = strcat(main_dir, '/stereo/right/');
 laser_dir = strcat(main_dir, '/ldmrs/');
 ins_file = strcat(main_dir, '/gps/ins.csv');
-models_dir = strcat(pwd,'/models/');
-extrinsics_dir = strcat(pwd,'/extrinsics/');
+models_dir = strcat(computer_folder,'/models/');
+extrinsics_dir = strcat(computer_folder,'/extrinsics/');
 
 %% Save video of testing sequence
 if capture_video 

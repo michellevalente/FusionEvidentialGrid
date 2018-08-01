@@ -8,7 +8,7 @@ function [ grid] = perceptionGrid( obj, aging_lidar, aging_stereo,time,limits)
 grid=obj.X; obj.X=[];
 
 %% Parameters
-thr_occ = 5;
+thr_occ = 8;
 timeout = 10;
 
 %% Define region of interest to not go through the entire map

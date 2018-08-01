@@ -9,11 +9,11 @@ initial_image_timestamp = 1418381798076682;
 end_image_timestamp = 1418381801701315;
 
 %% Algorithm parameters 
-scale_image = 0.4;
-grid_parameters.resolution = 0.2;
-grid_parameters.size_grid_x = 150 / grid_parameters.resolution;
-grid_parameters.size_grid_y = 150 / grid_parameters.resolution;
-grid_parameters.origin = [ 1, grid_parameters.size_grid_y / 2.0];
+scale_image = 0.5;
+grid_parameters.resolution = 0.4;
+grid_parameters.size_grid_x = round(150 / grid_parameters.resolution);
+grid_parameters.size_grid_y = round(150 / grid_parameters.resolution);
+grid_parameters.origin = [ 1, round(grid_parameters.size_grid_y / 2.0)];
 
 %% Folders
 computer_folder = pwd;

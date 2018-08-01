@@ -1,40 +1,29 @@
-function U = processImage(image_left, image_right)
+function U = processImage(image_left, image_right, scale)
     %% variables
-    scale = 0.5;
     show_all_images = 0;
     var_ground = -30;
-    
     image_left = im2double((image_left));
     image_right = im2double((image_right));
     image_left = imresize(((image_left)),scale);
     image_right = imresize(((image_right)),scale);
-    % image_left = adapthisteq(image_left,'clipLimit',0.02,'Distribution','rayleigh');
-    % image_right = adapthisteq(image_right,'clipLimit',0.02,'Distribution','rayleigh');
-
-    %% Disparity
-
     max_d = 32;
     min_d = 0;
     blocks = 15;
 
+    %% Calculate disparity
     disparityRange = [min_d max_d];
     image_left = rgb2gray(image_left);
     image_right = rgb2gray(image_right);
-    
-%     disp = disparityMap(image_left, image_right, 2, 0, 16);
     
     I = disparity((image_left),(image_right),'Method', 'BlockMatching', 'BlockSize',...
         blocks,'DisparityRange',disparityRange, 'UniquenessThreshold', 0, ...
         'ContrastThreshold', 0.5);
     
-    
-%     I = imresize(I, scale);
     [m,n] = size(I);
     start_j = 1;
     end_j = n ;
     start_i = 300 * scale;
     end_i = 750 * scale;
-%     
     I(I == -1) = 0;
     I = uint8(I);
     I(I > max_d) = max_d;
@@ -42,17 +31,8 @@ function U = processImage(image_left, image_right)
     [m,n] = size(I);
     U = zeros(max_d,n);
     
-    
-
-    if show_all_images == 1
-        figure 
-        imshow(I,[0 32]);
-        title('Disparity Map');
-        colormap(gca,jet) 
-        colorbar
-    end
-
-    %% v-disparity
+   
+    %% Calculate v-disparity
     V = zeros(m,max_d);
     for i = start_i:end_i
         for j = start_j:end_j
@@ -125,16 +105,7 @@ function U = processImage(image_left, image_right)
         end
     end
 
-    if show_all_images == 1
-        figure;
-        imagesc(uint8(I_ground));
-        colormap('default');axis image;
-        figure('Name', 'I_obstacle');
-        imagesc(uint8(I_obstacle));
-        colormap('default');axis image;
-    end
-
-    %% u-disparity
+    %% Calculate u-disparity
     for i = start_i:end_i
         for j = start_j:end_j
             d = I_obstacle(i,j);
@@ -143,15 +114,9 @@ function U = processImage(image_left, image_right)
             end
         end
     end
+    U = uint8(U);
+    U(U > 5) = 255;
+    U(U <= 5) = 0;
 
-    Z = uint8(U);
-    Z(U > 5) = 255;
-    Z(U <= 5) = 0;
-
-    if show_all_images == 1
-        figure('Name','u-disparity');
-        imshow(Z)
-    end
-%     imshow(U);
 end
 

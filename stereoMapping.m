@@ -1,11 +1,10 @@
 function [grid_evidential, aging_camera, changes] = stereoMapping( ...
     obj_stereo_grid, U, grid_parameters, pose_camera, obj, G_ins_camera, ...
-    time, camera_params, limits)
+    time, camera_params, limits, scale)
 aging_camera=obj.X; obj.X=[];
 grid_evidential=obj_stereo_grid.X; obj_stereo_grid.X=[];
 
 %% Parameters
-scale = 0.5;
 [~,n] = size(U);
 start_j = 60 * scale;
 end_j = n - start_j;

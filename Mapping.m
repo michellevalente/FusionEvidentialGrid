@@ -34,7 +34,7 @@ if calculate_grid_stereo
      % Create the stereo grid
     [stereo_grid, aging_stereo, changes_stereo] = stereoMapping(...
         obj_stereo_grid, u_disparity, grid_parameters, pose, obj_aging_stereo, ...
-        G_ins_camera, timestamp, camera_params, limits);
+        G_ins_camera, timestamp, camera_params, limits, scale_image);
 end
 
 %% Mapping Fusion ( time and sensor )

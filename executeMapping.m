@@ -28,7 +28,7 @@ for t = 1:max_loop
                 error(['No image found for timestamp: ' ...
                     num2str(camera_timestamps(t))]);
             end
-            u_disparity = processImage(image_left, image_right);
+            u_disparity = processImage(image_left, image_right, scale_image);
     end
 
     %% Show image from left camera for demo 

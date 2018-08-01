@@ -11,7 +11,7 @@ function [grid_evidential, aging_lidar, changes, limits] = lidarMapping(...
     position = round(position_world/grid_parameters.resolution + grid_parameters.origin);
    
     %% Limits current map
-    map_range = 50 / grid_parameters.resolution;
+    map_range = round(50 / grid_parameters.resolution);
     limit_x_min = position(1) - map_range;
     if limit_x_min < 1
       limit_x_min = 1;

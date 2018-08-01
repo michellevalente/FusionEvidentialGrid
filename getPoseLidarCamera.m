@@ -1,3 +1,6 @@
+%% getPoseLidarCamera function
+%  Get pose between the timestamp of the camera and the closest one of the
+%  LIDAR 
 function [pose_lidar_camera, laser_timestamp_camera] = getPoseLidarCamera(...
     timestamp,laser_timestamps, camera_timestamps, ins_timestamps, ...
     ins_poses, ins_quaternions)

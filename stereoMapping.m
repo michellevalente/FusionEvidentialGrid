@@ -12,7 +12,6 @@ end_j = n - start_j;
 max_distance = 20;
 focal = camera_params.f * scale;
 cu = camera_params.cu * scale;
-cv = camera_params.cv * scale;
 baseline = camera_params.b;
 confidence_camera = 0.7;
 origin = grid_parameters.origin;
@@ -20,29 +19,31 @@ res = grid_parameters.resolution;
 grid_size_x = grid_parameters.size_grid_x;
 grid_size_y = grid_parameters.size_grid_y;
 grid = zeros(grid_size_x, grid_size_y);
-resolution = grid_parameters.resolution;
 
-%% Creation of evidential grid of obstacles
+%% Creation of evidential grid of obstacles detected by the camera
 changes = zeros(32 * (end_j -start_j) ,2);
 count_changes = 1;
 matrix_obstacles = zeros(200,200);
 
+%% Loop through the disparities 
 for d = 5:25
     for j = start_j:end_j
         p = U(d,j);
         if p > 10  
+            %% Map to world coordinates
             x = round(baseline/2.0 + (baseline * (j - cu))/d);
             y = round(focal * baseline / d);
             y_map = ceil((y)/res + 100);
             x_map = ceil(x/res + 100);
             if x_map >= 1 && x_map <= 200 && y_map >= 1 && y_map <= 200 && matrix_obstacles(x_map,y_map) < 10
+                %% Gaussian observation model 
                 matrix_obstacles(x_map,y_map) = matrix_obstacles(x_map,y_map) + 1.0;
-                [points] = camera_to_world( x, y, j, d, res, max_distance,...
+                [points] = cameraToWorld( x, y, j, d, res, max_distance,...
                     camera_params);
             else
                 continue;
             end
-            
+            %% Map to grid coordinates
             if size(points,1) > 0
                 points2 = [points(:,2),points(:,1), ones(size(points,1),2)];
                 points2 = (pose_camera * G_ins_camera * points2')' ;
@@ -72,6 +73,7 @@ for d = 5:25
     
 end
 
+%% Activation function
 coef_tanh = 0.3;
 for i = 1:count_changes-1
     x = changes(i,1);

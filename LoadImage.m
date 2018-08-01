@@ -60,8 +60,4 @@ function [image] = LoadImage(directory, timestamp, LUT, cameraParams)
     image = UndistortImage(image, LUT);
   end
   
-%   image2 = undistortImage(image,cameraParams);
-  
-%   image = image1;
-  
 end

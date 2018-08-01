@@ -26,7 +26,6 @@ for i = 1:size(changes,1)
             free =  fix((free / (1 - conf)) * 100) / 100;
             occ = fix((occ / (1 - conf)) * 100) / 100;
             unk = fix((unk / (1 - conf)) * 100) / 100;
-%             conf = 0.0;
             if (free + occ + unk) < 1.0
                unk = unk + (1 - (free + occ + unk));
             end

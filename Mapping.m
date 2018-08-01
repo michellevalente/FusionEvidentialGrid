@@ -79,6 +79,6 @@ end
 if mod(t,1) == 0
     obj=Reference;
     obj.X=total_grid; clear total_grid;
-    [total_grid, average_entropy, average_specificity] = ...
-            perceptionGrid(obj, aging_lidar, aging_stereo, camera_timestamps(t), limits, t);
+    [total_grid] = perceptionGrid(obj, aging_lidar, aging_stereo, ...
+        camera_timestamps(t), limits);
 end

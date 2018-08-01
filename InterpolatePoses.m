@@ -32,22 +32,6 @@ function [poses] = InterpolatePoses(pose_timestamps, origin_timestamp, ...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   pose_timestamps = [origin_timestamp pose_timestamps];
-% 
-%   lower_index = max(find(ins_timestamps(:,1)<=min(pose_timestamps), 1, ...
-%       'last')-1,1);
-%   upper_index = find(ins_timestamps(:,1)>max(pose_timestamps), 1, 'first')+1;
-  
-%   lower_index = max(lower_index, 1);
-%   upper_index = min(upper_index, numel(ins_timestamps));
-  
-%   ins_poses = cell(1, upper_index - lower_index + 1);
-%   ins_quaternions = cell(1, upper_index - lower_index + 1);
-  
-%   for i=1:upper_index
-%         ins_poses{i} = SE3MatrixFromComponents(...
-%           northings(i), eastings(i), downs(i), rolls(i), pitches(i), yaws(i));
-%         ins_quaternions{i} = SO3ToQuaternion(ins_poses{i}(1:3,1:3))';
-%   end
   
   [lower_index_rows, lower_index_cols] = ...
     find(and(bsxfun(@le,ins_timestamps,pose_timestamps)',...
@@ -56,7 +40,6 @@ function [poses] = InterpolatePoses(pose_timestamps, origin_timestamp, ...
   lower_indices = zeros(size(lower_index_rows));
   lower_indices(lower_index_rows) = lower_index_cols;
   lower_indices = max(lower_indices, 1);
-%   lower_indices = lower_indices(1:size(pose_timestamps));
   
   ins_timestamps = cast(ins_timestamps, 'double');
   pose_timestamps = cast(pose_timestamps, 'double');
@@ -65,8 +48,6 @@ function [poses] = InterpolatePoses(pose_timestamps, origin_timestamp, ...
   
   quaternions_lower = [ins_quaternions{lower_indices}];
   quaternions_upper = [ins_quaternions{lower_indices+1}];
-  
-  % interpolate quaternions
   d_array = sum(quaternions_lower.*quaternions_upper,1);
   
   linear_interp_indices = find(~(abs(d_array)<1.0));
@@ -90,10 +71,7 @@ function [poses] = InterpolatePoses(pose_timestamps, origin_timestamp, ...
   
   quaternions_interp = repmat(scale0_array,4,1).*quaternions_lower + ...
       repmat(scale1_array,4,1).*quaternions_upper;
-    
-  % interpolate positions
-%   size(lower_indices)
-%   ins_poses_array = [ins_poses{:}];
+
     if sequence == 0
        ins_poses_array = [ins_poses{:}];
        positions_lower = ins_poses_array(1:3,4*lower_indices);

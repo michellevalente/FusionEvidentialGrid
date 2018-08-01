@@ -1,7 +1,7 @@
 function [ grid] = perceptionGrid( obj, aging_lidar, aging_stereo,time,limits)
 %% Life-long grid states:
 % 1 - free/currently free , 2 - free/currently unk
-% 3 - occ/fixed , 4 - occ/currently occ
+% 3 - occ/currently occ , 4 - occ/fixed
 % 0 - unk
 
 %% Get object grid
@@ -35,12 +35,12 @@ for j = j_min:j_max
             elseif max_value == 2
                grid(i,j,6) = grid(i,j,6) + 1;
                if grid(i,j,6) > thr_occ
-                   grid(i,j,5) = 4;
-               else
                    grid(i,j,5) = 3;
+               else
+                   grid(i,j,5) = 4;
                end
             else
-                if grid(i,j,5) == 3
+                if grid(i,j,5) == 4
                     grid(i,j,5) = 0;
                 end
             end
@@ -48,7 +48,7 @@ for j = j_min:j_max
             if time - last_age > timeout
                 if grid(i,j,5) == 1 
                     grid(i,j,5) = 2;
-                elseif grid(i,j,5) == 3
+                elseif grid(i,j,5) == 4
                     grid(i,j,5) = 0;
                 end
             end

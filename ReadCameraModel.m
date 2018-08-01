@@ -81,8 +81,6 @@ function [fx, fy, cx, cy, G_camera_image, LUT] = ReadCameraModel(image_dir, mode
   % x-forward coordinate frame at camera origin, and image frame for
   % the specific lense
   G_camera_image = intrinsics(2:5, 1:4);
-  cam_intrinsics = [fx 0 0; 0 fx 0; cx cy 1];
-%   cam_params = cameraParameters('IntrinsicMatrix', cam_intrinsics);
   
   if nargout > 5
     if ~exist(lut_path, 'file') == -1

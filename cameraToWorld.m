@@ -1,11 +1,10 @@
-%% cameraToWorld function 
-% Apply gausian observation model in the obstacles detected by the camera
 function [ points] = cameraToWorld( x, y, u, d, resolution, max_distance,...
-                                    camera_params)
+                                    camera_params) 
+%% Apply gausian observation model in the obstacles detected by the camera
     b = camera_params.b;
     f = camera_params.f;
     u0 = camera_params.cu;
-    
+
     distance = sqrt(x^2 + y^2);
     if distance > max_distance
        points = [];

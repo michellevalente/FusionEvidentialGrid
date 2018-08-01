@@ -34,7 +34,7 @@ for d = 5:25
             y = round(focal * baseline / d);
             y_map = ceil((y)/res + 100);
             x_map = ceil(x/res + 100);
-            if x_map >= 1 && x_map <= 200 && y_map >= 1 && y_map <= 200 && matrix_obstacles(x_map,y_map) < 10
+            if x_map >= 1 && x_map <= 200 && y_map >= 1 && y_map <= 200 && matrix_obstacles(x_map,y_map) < 20
                 %% Gaussian observation model 
                 matrix_obstacles(x_map,y_map) = matrix_obstacles(x_map,y_map) + 1.0;
                 [points] = cameraToWorld( x, y, j, d, res, max_distance,...

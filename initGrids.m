@@ -6,7 +6,7 @@
 % 4: evidential mass of unknown state
 % 5: perception state (look perceptionGrid.m for specification)
 % 6: counter hits occupied
-total_grid = zeros(grid_parameters.size_grid_x, grid_parameters.size_grid_y,7);
+total_grid = zeros(grid_parameters.size_grid_x, grid_parameters.size_grid_y,6);
 total_grid(:,:,4) = 1.0; % initialize with evidential mass at unknown
 total_grid(:,:,5) = 0; % initialize with perception state unknown
 

@@ -7,12 +7,12 @@ total_grid=obj_total_grid.X; obj_total_grid.X=[];
 new_grid=obj_new_grid.X; obj_new_grid.X=[];
 
 for i = 1:size(changes,1)
-    col =  changes(i,1);
-    row = changes(i,2);
+    row =  changes(i,1);
+    col = changes(i,2);
     
-    m1 = total_grid(col,row,1:4);
-    m2 = new_grid(col,row,1:4);
-    new_grid(col,row,:) = [0,0,0,1];
+    m1 = total_grid(row,col,1:4);
+    m2 = new_grid(row,col,1:4);
+    new_grid(row,col,:) = [0,0,0,1];
     m1(3) = 0.0;
     m2(3) = 0.0;
     
@@ -35,7 +35,7 @@ for i = 1:size(changes,1)
             end
         end
         
-        total_grid(col,row,1:4) = [free,occ,conf,unk];
+        total_grid(row,col,1:4) = [free,occ,conf,unk];
     end
     
 end

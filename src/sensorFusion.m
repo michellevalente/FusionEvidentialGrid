@@ -15,12 +15,12 @@ function [fusion_grid, lidar_grid, stereo_grid] = sensorFusion( obj_lidar_grid, 
     fusion_grid(:,:,4) = 1;
 
     for i = 1:size(changes,1)
-        col =  changes(i,1);
-        row = changes(i,2);
-        m1 = lidar_grid(col,row,:);
-        m2 = stereo_grid(col,row,:);
-        lidar_grid(col,row,:) = [0,0,0,1];
-        stereo_grid(col,row,:) = [0,0,0,1];
+        row =  changes(i,1);
+        col = changes(i,2);
+        m1 = lidar_grid(row,col,:);
+        m2 = stereo_grid(row,col,:);
+        lidar_grid(row,col,:) = [0,0,0,1];
+        stereo_grid(row,col,:) = [0,0,0,1];
         
         %% Conjunctive rule
         if (m1(4) ~= 1.0 && m2(4) ~= 1.0) || ~isequal(m1,m2)
@@ -44,6 +44,6 @@ function [fusion_grid, lidar_grid, stereo_grid] = sensorFusion( obj_lidar_grid, 
             unk = fix((unk / (1 - conf)) * 100) / 100;
             conf = 0.0;
         end
-        fusion_grid(col,row,:) = [free,occ,conf,unk];
+        fusion_grid(row,col,:) = [free,occ,conf,unk];
     end
 end

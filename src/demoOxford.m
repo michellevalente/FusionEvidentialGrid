@@ -12,7 +12,7 @@ end_image_timestamp = 1418381801701315;
 scale_image = 0.5;
 grid_parameters.resolution = 0.4;
 grid_parameters.size_grid_x = round(150 / grid_parameters.resolution);
-grid_parameters.size_grid_y = round(150 / grid_parameters.resolution);
+grid_parameters.size_grid_y = round(50 / grid_parameters.resolution);
 grid_parameters.origin = [ 1, round(grid_parameters.size_grid_y / 2.0)];
 
 %% Folders

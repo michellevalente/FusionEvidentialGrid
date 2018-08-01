@@ -12,6 +12,7 @@ function [grid_evidential, aging_lidar, changes, limits] = lidarMapping(...
    
     %% Limits current map
     map_range = round(50 / grid_parameters.resolution);
+    
     limit_x_min = position(1) - map_range;
     if limit_x_min < 1
       limit_x_min = 1;
@@ -50,14 +51,14 @@ function [grid_evidential, aging_lidar, changes, limits] = lidarMapping(...
       [free_x,free_y] = bresenham(row,col,position(1),position(2));
 
       if(row >= limits(1) && row <= limits(2) && col >= limits(3) && col <= limits(4) && ...
-              grid_evidential(col,row,2) ~= confidence_lidar_occ)
-        changes(count_changes,:) = [col,row];
+              grid_evidential(row,col,2) ~= confidence_lidar_occ)
+        changes(count_changes,:) = [row,col];
         count_changes = count_changes + 1;
-        grid_evidential(col,row,1) = 0.0;
-        grid_evidential(col,row,2) = confidence_lidar_occ;
-        grid_evidential(col,row,3) = 0.0;
-        grid_evidential(col,row,4) = 1 - confidence_lidar_occ;
-        aging_lidar(col,row,1) = time;
+        grid_evidential(row,col,1) = 0.0;
+        grid_evidential(row,col,2) = confidence_lidar_occ;
+        grid_evidential(row,col,3) = 0.0;
+        grid_evidential(row,col,4) = 1 - confidence_lidar_occ;
+        aging_lidar(row,col,1) = time;
       end
 
       %% Define free space
@@ -67,19 +68,19 @@ function [grid_evidential, aging_lidar, changes, limits] = lidarMapping(...
               col = free_y(j);
 
               if(row >= limits(1) && row <= limits(2) && col >= limits(3) && col <= limits(4) )
-                if col > grid_parameters.size_grid_x 
-                    col = grid_parameters.size_grid_x ;
+                if col > grid_parameters.size_grid_y
+                    col = grid_parameters.size_grid_y ;
                 end
-                if grid_evidential(col,row,2) == confidence_lidar_occ
+                if grid_evidential(row,col,2) == confidence_lidar_occ
                     break;
                 else
-                    if grid_evidential(col,row,1) ~= confidence_lidar_free
-                       grid_evidential(col,row,1) = confidence_lidar_free;
-                       grid_evidential(col,row,2) = 0.0;
-                       grid_evidential(col,row,3) = 0.0;
-                       grid_evidential(col,row,4) = 1 - confidence_lidar_free;
-                       aging_lidar(col,row,1) = time;
-                       changes(count_changes,:) = [col,row];
+                    if grid_evidential(row,col,1) ~= confidence_lidar_free
+                       grid_evidential(row,col,1) = confidence_lidar_free;
+                       grid_evidential(row,col,2) = 0.0;
+                       grid_evidential(row,col,3) = 0.0;
+                       grid_evidential(row,col,4) = 1 - confidence_lidar_free;
+                       aging_lidar(row,col,1) = time;
+                       changes(count_changes,:) = [row,col];
                        count_changes = count_changes + 1;
                     end
                 end

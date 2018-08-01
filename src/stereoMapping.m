@@ -58,11 +58,11 @@ for d = 5:25
                     if(x > limits(1) && x < limits(2) && y > limits(3) && ...
                         y < limits(4))
                            p_cell = prob;
-                           if grid(y,x) == 0
-                              changes(count_changes,:) = [y,x];
+                           if grid(x,y) == 0
+                              changes(count_changes,:) = [x,y];
                               count_changes = count_changes + 1; 
                            end
-                           grid(y,x) = grid(y,x) + p_cell ;
+                           grid(x,y) = grid(x,y) + p_cell ;
                     end
                 end
             end

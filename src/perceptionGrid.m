@@ -12,10 +12,10 @@ thr_occ = 8;
 timeout = 10;
 
 %% Define region of interest to not go through the entire map
-i_min = limits(3);
-i_max = limits(4);
-j_min = limits(1);
-j_max = limits(2);
+i_min = limits(1);
+i_max = limits(2);
+j_min = limits(3);
+j_max = limits(4);
 
 %% Loop in region of interest
 for j = j_min:j_max

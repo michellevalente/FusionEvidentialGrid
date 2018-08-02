@@ -8,5 +8,5 @@ Michelle Valente, Cyril Joly and Arnaud de la Fortelle.
 
 
 ## Demo 
-The dataset used for this demo was the [The Oxford RobotCar Dataset](http://robotcar-dataset.robots.ox.ac.uk/).
+The dataset used for this demo was the [The Oxford RobotCar Dataset](http://robotcar-dataset.robots.ox.ac.uk/).  
 A small sequence can be found in the folder [sample](https://github.com/michellevalente/FusionEvidentialGrid/tree/master/sample). To run the demo using this sequence just run demoOxford.m.

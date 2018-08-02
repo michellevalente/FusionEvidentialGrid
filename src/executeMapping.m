@@ -47,7 +47,7 @@ for t = 1:max_loop
     end
 
     %% Read laser scanner
-    pointcloud = readScan(laser_dir, laser_timestamp_camera, 3);
+    pointcloud = readScan(laser_dir, laser_timestamp_camera, 2);
 
     %% Get pose and timestamp at new camera acquision 
     pose = ins_poses_camera{t};
@@ -58,6 +58,7 @@ for t = 1:max_loop
 
     %% Show global life-long map 
     showEvidentialMap(total_grid);
+
     if capture_video
         writeVideo(videoObj, getframe(gcf));
     end

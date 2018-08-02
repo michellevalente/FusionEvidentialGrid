@@ -9,7 +9,7 @@ grid=obj.X; obj.X=[];
 
 %% Parameters
 thr_occ = 8;
-timeout = 10;
+timeout = 5;
 
 %% Define region of interest to not go through the entire map
 i_min = limits(1);

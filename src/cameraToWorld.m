@@ -1,26 +1,19 @@
-function [ points] = cameraToWorld( x, y, u, d, resolution, max_distance,...
-                                    camera_params) 
+function [ points] = cameraToWorld( x, y, u, d, resolution, camera_params) 
 %% Apply gausian observation model in the obstacles detected by the camera
     b = camera_params.b;
     f = camera_params.f;
     u0 = camera_params.cu;
 
-    distance = sqrt(x^2 + y^2);
-    if distance > max_distance
-       points = [];
-       return
-    end
-
     JG = [b/d  -b*(u-u0)/d^2; 0  -b*f/d^2];
     omega_d = 0.5;
-    omega_u = 10.0;
+    omega_u = 20.0;
 
     KU = [omega_u^2 0 ;  0 omega_d^2;];
     sigma = JG * KU * JG';
 
     mu = [x, y];
-    xi = x-0.8:resolution:x+0.8; 
-    yi = y-0.8:resolution:y+0.8;
+    xi = x-(resolution*2):resolution:x+(resolution*2); 
+    yi = y-(resolution*3):resolution:y+(resolution*3);
 
     [X,Y] = meshgrid(xi,yi);
     W = mvnpdf([X(:) Y(:)],mu,sigma); 

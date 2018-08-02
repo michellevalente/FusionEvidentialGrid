@@ -8,21 +8,23 @@ grid_evidential=obj_stereo_grid.X; obj_stereo_grid.X=[];
 [~,n] = size(U);
 start_j = 60 * scale;
 end_j = n - start_j;
-max_distance = 20;
+max_distance = 25;
+max_dist_map = max_distance / grid_parameters.resolution;
 focal = camera_params.f * scale;
 cu = camera_params.cu * scale;
 baseline = camera_params.b;
-confidence_camera = 0.7;
+confidence_camera = 0.9;
 origin = grid_parameters.origin;
 res = grid_parameters.resolution;
 grid_size_x = grid_parameters.size_grid_x;
 grid_size_y = grid_parameters.size_grid_y;
 grid = zeros(grid_size_x, grid_size_y);
+position_world = [pose_camera(1,4), pose_camera(2,4)];
+position = round(position_world/res + grid_parameters.origin);
 
 %% Creation of evidential grid of obstacles detected by the camera
 changes = zeros(32 * (end_j -start_j) ,2);
 count_changes = 1;
-matrix_obstacles = zeros(200,200);
 
 %% Loop through the disparities 
 for d = 5:25
@@ -32,16 +34,8 @@ for d = 5:25
             %% Map to world coordinates
             x = round(baseline/2.0 + (baseline * (j - cu))/d);
             y = round(focal * baseline / d);
-            y_map = ceil((y)/res + 100);
-            x_map = ceil(x/res + 100);
-            if x_map >= 1 && x_map <= 200 && y_map >= 1 && y_map <= 200 && matrix_obstacles(x_map,y_map) < 20
-                %% Gaussian observation model 
-                matrix_obstacles(x_map,y_map) = matrix_obstacles(x_map,y_map) + 1.0;
-                [points] = cameraToWorld( x, y, j, d, res, max_distance,...
-                    camera_params);
-            else
-                continue;
-            end
+            [points] = cameraToWorld( x, y, j, d, res, camera_params);
+
             %% Map to grid coordinates
             if size(points,1) > 0
                 points2 = [points(:,2),points(:,1), ones(size(points,1),2)];
@@ -57,12 +51,15 @@ for d = 5:25
 
                     if(x > limits(1) && x < limits(2) && y > limits(3) && ...
                         y < limits(4))
-                           p_cell = prob;
-                           if grid(x,y) == 0
-                              changes(count_changes,:) = [x,y];
-                              count_changes = count_changes + 1; 
+                           distance = sqrt((x-position(1))^2 + ...
+                               (y-position(2))^2);
+                           if distance < max_dist_map
+                               if grid(x,y) == 0
+                                  changes(count_changes,:) = [x,y];
+                                  count_changes = count_changes + 1; 
+                               end
+                               grid(x,y) = grid(x,y) + prob ;
                            end
-                           grid(x,y) = grid(x,y) + p_cell ;
                     end
                 end
             end
@@ -73,7 +70,7 @@ for d = 5:25
 end
 
 %% Activation function
-coef_tanh = 0.3;
+coef_tanh = 0.05;
 for i = 1:count_changes-1
     x = changes(i,1);
     y = changes(i,2);

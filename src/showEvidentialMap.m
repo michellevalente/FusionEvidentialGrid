@@ -15,7 +15,7 @@ function showEvidentialMap(total_grid)
            [1 0 0]];
     image = mat2gray(total_grid(:,:,5));
     imshow(flipud(image));
-    colormap(map);
+    colormap(gca,map);
     
 end
 

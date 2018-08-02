@@ -2,7 +2,7 @@ function [total_grid, new_grid] = timeFusion( obj_new_grid, obj_total_grid,...
                                             changes)
 %% Fusion between local grid map and global grid map
 
-dempster_normalization = 0;
+dempster_normalization = 1;
 total_grid=obj_total_grid.X; obj_total_grid.X=[];
 new_grid=obj_new_grid.X; obj_new_grid.X=[];
 

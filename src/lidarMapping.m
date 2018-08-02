@@ -11,7 +11,7 @@ function [grid_evidential, aging_lidar, changes, limits] = lidarMapping(...
     position = round(position_world/grid_parameters.resolution + grid_parameters.origin);
    
     %% Limits current map
-    map_range = round(50 / grid_parameters.resolution);
+    map_range = round(80 / grid_parameters.resolution);
     
     limit_x_min = position(1) - map_range;
     if limit_x_min < 1
@@ -33,8 +33,8 @@ function [grid_evidential, aging_lidar, changes, limits] = lidarMapping(...
     limits = [limit_x_min,limit_x_max, limit_y_min, limit_y_max ];
   
     %% Create evidential grid map
-    confidence_lidar_occ = 0.7;  
-    confidence_lidar_free = 0.7;  
+    confidence_lidar_occ = 0.8;  
+    confidence_lidar_free = 0.5;  
     pointcloud = sortrows(pointcloud', 1)';
     size_pc = size(pointcloud);
     changes = zeros(1000,2);

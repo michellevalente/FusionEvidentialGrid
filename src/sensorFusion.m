@@ -23,7 +23,7 @@ function [fusion_grid, lidar_grid, stereo_grid] = sensorFusion( obj_lidar_grid, 
         stereo_grid(row,col,:) = [0,0,0,1];
         
         %% Conjunctive rule
-        if (m1(4) ~= 1.0 && m2(4) ~= 1.0) || ~isequal(m1,m2)
+        if ~isequal(m1,m2)
             free = m1(4) * m2(1) + m1(1) * m2(1) + m1(1) * m2(4); 
             occ = m1(4) * m2(2) + m1(2) * m2(2) + m1(2) * m2(4); 
             conf = m1(3) * m2(1) + m1(3) * m2(2) + m1(3) * m2(3) + ...

@@ -13,7 +13,7 @@ function [ points] = cameraToWorld( x, y, u, d, resolution, camera_params)
 
     mu = [x, y];
     xi = x-(resolution*2):resolution:x+(resolution*2); 
-    yi = y-(resolution*3):resolution:y+(resolution*3);
+    yi = y-(resolution*5):resolution:y+(resolution*5);
 
     [X,Y] = meshgrid(xi,yi);
     W = mvnpdf([X(:) Y(:)],mu,sigma); 

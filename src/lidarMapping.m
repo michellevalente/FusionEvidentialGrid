@@ -34,7 +34,7 @@ function [grid_evidential, aging_lidar, changes, limits] = lidarMapping(...
   
     %% Create evidential grid map
     confidence_lidar_occ = 0.8;  
-    confidence_lidar_free = 0.5;  
+    confidence_lidar_free = 0.6;  
     pointcloud = sortrows(pointcloud', 1)';
     size_pc = size(pointcloud);
     changes = zeros(1000,2);

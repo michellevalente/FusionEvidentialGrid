@@ -17,7 +17,7 @@ grid_parameters.origin = [ 1, round(grid_parameters.size_grid_y / 2.0)];
 
 %% Folders
 computer_folder = strcat(pwd,'/../');
-main_dir = strcat(computer_folder,'/sample_small');
+main_dir = strcat(computer_folder,'/sample');
 image_dir = strcat(main_dir, '/stereo/left/');
 image_dir_left = strcat(main_dir, '/stereo/left/');
 image_dir_right = strcat(main_dir, '/stereo/right/');

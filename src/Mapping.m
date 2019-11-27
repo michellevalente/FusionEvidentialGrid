@@ -73,7 +73,7 @@ else
         obj_fusion_grid = Reference; obj_fusion_grid.X=lidar_grid;
         clear lidar_grid;
         [total_grid, lidar_grid] = timeFusion(obj_fusion_grid, obj, ...
-        timestamp, previous_timestamp, changes);
+        changes);
     else
         %% Fusion between local stereo camera grid and global grid 
         changes = changes_stereo;
@@ -82,7 +82,7 @@ else
         obj_fusion_grid = Reference; obj_fusion_grid.X=stereo_grid;
         clear stereo_grid;
         [total_grid, stereo_grid] = timeFusion(obj_fusion_grid, obj, ...
-        timestamp, previous_timestamp, changes); 
+        changes); 
     end
 end
 
